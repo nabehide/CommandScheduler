@@ -1,9 +1,10 @@
 import sys
 import os
-from select import select
-# from threading import Timer
-import msvcrt
-import time
+if os.name == "nt":
+    import msvcrt
+    import time
+else:
+    from select import select
 
 
 class Commander(object):
@@ -27,8 +28,8 @@ class Commander(object):
         print("-------------------------")
 
     def raw_input_with_timeout(self, timeout=60.0):
-        timer = time.monotonic
         if os.name == "nt":
+            timer = time.monotonic
             endtime = timer() + timeout
             line = ""
             while timer() < endtime:
@@ -46,7 +47,7 @@ class Commander(object):
         else:
             rlist, _, _ = select([sys.stdin], [], [], timeout)
             if rlist:
-                return sys.stdin.readline()
+                return sys.stdin.readline()[:-1]
             else:
                 return False
 
@@ -67,8 +68,8 @@ class Commander(object):
     def procedure(self):
         self.showInformation()
         while True:
-            cmd =  self.raw_input_with_timeout()
-            if cmd == False:
+            cmd = self.raw_input_with_timeout()
+            if cmd is False:
                 pass
             elif cmd in self.nameList:
                 self.functionList[self.nameList.index(cmd)]()
