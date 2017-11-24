@@ -22,7 +22,7 @@ class Commander(object):
         print("-------------------------")
         for i in range(self.number):
             print(self.nameList[i], "/ ", end="")
-            if (i + 1) % 5 == 0:
+            if (i + 1) % 5 == 0 and (i + 1) != self.number:
                 print()
         print()
         print("-------------------------")

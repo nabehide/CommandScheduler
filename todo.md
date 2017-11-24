@@ -1,0 +1,4 @@
+- scheduler
+- split function into groups
+- add requirements.txt
+- check Python version dependency
