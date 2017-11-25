@@ -1,6 +1,7 @@
 - some args from command
 - check args
+- slack
 - split function into groups
-- add requirements.txt
+- tab completion
 - check Python version dependency
 - register pip

@@ -11,6 +11,7 @@ cm = Commander()
 account = {"username": username, "password": password}
 config = {"headless": True, "debug": True}
 td = TradeDerby(account, config)
+td.open()
 td.login()
 
 # make schedule

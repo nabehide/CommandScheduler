@@ -17,23 +17,36 @@ class Commander(object):
 
         # schedule
         self.scheduleList = []
-        self.previous =  []
+        self.previous = []
         self.cycle = []
         self.numberSchedule = 0
 
-        self.addTask("info", self.showInformation)
+        self.addTask("showTask", self.showTask)
+        self.addTask("showSchedule", self.showSchedule)
         self.addTask("addSchedule", self.addSchedule)
         self.addTask("end", self.end)
 
-    def showInformation(self):
+    def showTask(self):
         print("-------------------------")
-        print("---   Command list    ---")
+        print("-----   Task list   -----")
         print("-------------------------")
         for i in range(self.numberTask):
             print(self.taskList[i], "/ ", end="")
             if (i + 1) % 5 == 0 and (i + 1) != self.numberTask:
                 print()
         print()
+        print("-------------------------")
+
+    def showSchedule(self):
+        print("-------------------------")
+        print("---   Schedule list   ---")
+        print("-------------------------")
+        for i in range(self.numberSchedule):
+            print(
+                self.scheduleList[i],
+                self.previous[i].strftime("%Y-%m-%d %H:%M:%S"),
+                self.cycle[i]
+            )
         print("-------------------------")
 
     def raw_input_with_timeout(self, timeout=60.0):
@@ -103,7 +116,7 @@ class Commander(object):
                 self.previous[i] = datetime.now()
 
     def procedure(self):
-        self.showInformation()
+        self.showTask()
         while True:
             cmd = self.raw_input_with_timeout()
             if cmd is False or len(cmd) == 0:
