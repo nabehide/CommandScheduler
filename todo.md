@@ -1,4 +1,5 @@
-- scheduler
+- some args from command
 - split function into groups
 - add requirements.txt
 - check Python version dependency
+- register pip
