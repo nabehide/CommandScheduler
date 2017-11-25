@@ -1,4 +1,5 @@
 - some args from command
+- check args
 - split function into groups
 - add requirements.txt
 - check Python version dependency

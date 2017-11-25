@@ -84,6 +84,13 @@ class Commander(object):
             if name[0] != "_" and callable(classObject.__getattribute__(name)):
                 self.addTask(name, classObject.__getattribute__(name))
 
+    def makeSchedule(self, schedule):
+        for sch in schedule.keys():
+            if sch not in self.taskList:
+                print(sch, ": Not Found")
+            else:
+                self.addSchedule(sch, schedule[sch])
+
     def end(self):
         sys.exit(0)
 
