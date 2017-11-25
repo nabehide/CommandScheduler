@@ -1,6 +1,8 @@
 import sys
 import os
 from datetime import datetime
+import requests
+import json
 if os.name == "nt":
     import msvcrt
     import time
@@ -9,7 +11,7 @@ else:
 
 
 class Commander(object):
-    def __init__(self):
+    def __init__(self, slackURL=""):
         # task
         self.taskList = []
         self.functionList = []
@@ -25,6 +27,24 @@ class Commander(object):
         self.addTask("showSchedule", self.showSchedule)
         self.addTask("addSchedule", self.addSchedule)
         self.addTask("end", self.end)
+
+        if slackURL == "":
+            self.slack = False
+        else:
+            self.slack = True
+            self.slackURL = slackURL
+            self.sendSlack("Connected to slack")
+
+    def sendSlack(self, message):
+        if not self.slack:
+            print("slack URL not found")
+        else:
+            requests.post(self.slackURL, data=json.dumps({
+                "text": message,
+                "username": os.uname()[1],
+                "icon_emoji": u":ghost",
+                "link_names": 1,
+            }))
 
     def showTask(self):
         print("-------------------------")
@@ -117,6 +137,7 @@ class Commander(object):
 
     def procedure(self):
         self.showTask()
+        self.showSchedule()
         while True:
             cmd = self.raw_input_with_timeout()
             if cmd is False or len(cmd) == 0:
@@ -124,14 +145,17 @@ class Commander(object):
             else:
                 cmd = cmd.split()
                 if cmd[0] in self.taskList:
+                    ret = ""
                     if len(cmd) == 1:
-                        self.functionList[self.taskList.index(cmd[0])]()
+                        ret = self.functionList[self.taskList.index(cmd[0])]()
                     elif len(cmd) == 2:
-                        self.functionList[self.taskList.index(cmd[0])](cmd[1])
+                        ret = self.functionList[self.taskList.index(cmd[0])](cmd[1])
                     elif len(cmd) == 3:
-                        self.functionList[self.taskList.index(cmd[0])](cmd[1], cmd[2])
+                        ret = self.functionList[self.taskList.index(cmd[0])](cmd[1], cmd[2])
                     else:
                         print("too many args")
+                    if isinstance(ret, str) and self.slack:
+                        self.sendSlack(ret)
                 else:
                     print(cmd, ": not registerd.")
 

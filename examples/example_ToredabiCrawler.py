@@ -1,11 +1,11 @@
 from CommandScheduler.Commander import Commander
 from ToredabiCrawler.TradeDerby import TradeDerby
 
-from private import username, password
+from private import username, password, slackURL
 from schedule import schedule
 
 
-cm = Commander()
+cm = Commander(slackURL)
 
 # login
 account = {"username": username, "password": password}
