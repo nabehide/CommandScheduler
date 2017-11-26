@@ -132,8 +132,10 @@ class Commander(object):
             name = self.scheduleList[i]
             diff = datetime.now() - self.previous[i]
             if self.cycle[i] * 60 <= diff.seconds:
-                self.functionList[self.taskList.index(name)]()
+                ret = self.functionList[self.taskList.index(name)]()
                 self.previous[i] = datetime.now()
+                if self.slack:
+                    self.sendSlack(ret)
 
     def procedure(self):
         self.showTask()
