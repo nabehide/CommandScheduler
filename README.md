@@ -11,5 +11,12 @@ Scheduler and command interface.
 slackURL = "https://your_slack_URL"
 ```
 
+## Requirements
+- Install dependent modules.
+
+```
+pip install -r requirements.txt
+```
+
 ## How to use
 - Please refer to "examples/example_*.py"
