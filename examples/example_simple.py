@@ -1,10 +1,8 @@
 from CommandScheduler.Commander import Commander
 from private import slackURL
 
+config = {"slackURL": slackURL, "logName": "log/log"}
 
-cm = Commander(slackURL)
-
-# import numpy as np
-# cm.addTaskFromClass(np)
+cm = Commander(config)
 
 cm.procedure()

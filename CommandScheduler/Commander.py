@@ -11,7 +11,7 @@ else:
 
 
 class Commander(object):
-    def __init__(self, slackURL=""):
+    def __init__(self, config):
         # task
         self.taskList = []
         self.functionList = []
@@ -28,12 +28,32 @@ class Commander(object):
         self.addTask("addSchedule", self.addSchedule)
         self.addTask("end", self.end)
 
-        if slackURL == "":
+        self.loadConfig(config)
+
+    def loadConfig(self, config):
+        if "slackURL" not in config.keys() or config["slackURL"] == "":
             self.slack = False
         else:
             self.slack = True
-            self.slackURL = slackURL
+            self.slackURL = config["slackURL"]
             self.sendSlack("Connected to slack")
+
+        if "logName" not in config.keys() or config["logName"] == "":
+            self.log = False
+        else:
+            self.log = True
+            self.logName = config["logName"]
+            self.writeLog(self.timeStamp() + "start log")
+
+    def timeStamp(self):
+        return datetime.now().strftime("[%Y-%m-%d %H:%M:%S] ")
+
+    def writeLog(self, message):
+        import csv
+        f = open(self.logName, "a")
+        writer = csv.writer(f)
+        writer.writerow([message])
+        f.close()
 
     def sendSlack(self, message):
         if not self.slack:
