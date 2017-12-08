@@ -5,12 +5,13 @@ from private import username, password, slackURL
 from schedule import schedule
 
 
-cm = Commander(slackURL)
+config_command = {"slackURL": slackURL, "logFile": "log/log"}
+cm = Commander(config_command)
 
 # login
 account = {"username": username, "password": password}
-config = {"headless": True, "debug": True}
-td = TradeDerby(account, config)
+config_toredabi = {"headless": True, "debug": True}
+td = TradeDerby(account, config_toredabi)
 td.open()
 td.login()
 
