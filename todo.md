@@ -4,3 +4,4 @@
 - tab completion
 - check Python version dependency
 - register pip
+- test

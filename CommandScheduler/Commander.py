@@ -59,12 +59,15 @@ class Commander(object):
         if not self.slack:
             print("slack URL not found")
         else:
-            requests.post(self.slackURL, data=json.dumps({
-                "text": message,
-                "username": os.uname()[1],
-                "icon_emoji": u":ghost",
-                "link_names": 1,
-            }))
+            try:
+                requests.post(self.slackURL, data=json.dumps({
+                    "text": message,
+                    "username": os.uname()[1],
+                    "icon_emoji": u":ghost",
+                    "link_names": 1,
+                }))
+            except ConnectionError:
+                print("Error : Could not send message to slack")
 
     def showTask(self):
         print("-------------------------")
