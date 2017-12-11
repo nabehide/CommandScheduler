@@ -10,7 +10,8 @@ else:
     from select import select
 
 
-class Commander(object):
+class PyCmdSched(object):
+
     def __init__(self, config):
         # task
         self.taskList = []
@@ -24,6 +25,7 @@ class Commander(object):
         self.numberSchedule = 0
 
         self.addTask("showTask", self.showTask)
+        self.addTask("addTask", self.addTask)
         self.addTask("showSchedule", self.showSchedule)
         self.addTask("addSchedule", self.addSchedule)
         self.addTask("end", self.end)

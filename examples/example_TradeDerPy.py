@@ -1,17 +1,21 @@
-from CommandScheduler.Commander import Commander
-from ToredabiCrawler.TradeDerby import TradeDerby
+from PyCmdSched.PyCmdSched import PyCmdSched
+from TradeDerPy.TradeDerPy import TradeDerPy
 
 from private import username, password, slackURL
 from schedule import schedule
 
 
 config_command = {"slackURL": slackURL, "logFile": "log/log"}
-cm = Commander(config_command)
+cm = PyCmdSched(config_command)
 
-# login
+# toredabi login
 account = {"username": username, "password": password}
-config_toredabi = {"headless": True, "debug": True}
-td = TradeDerby(account, config_toredabi)
+config_toredabi = {
+    "headless": True,
+    "debug": True,
+    "driverPath": "./chromedriver",
+}
+td = TradeDerPy(account, config_toredabi)
 td.open()
 td.login()
 
