@@ -1,7 +1,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Maintainability](https://api.codeclimate.com/v1/badges/67e866b53f451b3c1982/maintainability)](https://codeclimate.com/github/nabehide/CommandScheduler/maintainability)
 
-# CommandScheduler
+# PyCmdSched
 Scheduler and command interface.
 
 ## slack notification
