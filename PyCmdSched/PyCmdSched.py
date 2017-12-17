@@ -133,7 +133,10 @@ class PyCmdSched(object):
 
     def addTask(self, name, function):
         self.taskList.append(name)
-        self.functionList.append(function)
+        if isinstance(function, str):
+            self.functionList.append(eval(function))
+        else:
+            self.functionList.append(function)
         self.numberTask += 1
 
     def addTaskFromClass(self, classObject):
