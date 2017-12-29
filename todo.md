@@ -1,5 +1,3 @@
-- some args from command
-- check args
 - split function into groups
 - tab completion
 - check Python version dependency

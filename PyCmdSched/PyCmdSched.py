@@ -177,19 +177,18 @@ class PyCmdSched(object):
             else:
                 cmd = cmd.split()
                 if cmd[0] in self.taskList:
-                    ret = ""
-                    if len(cmd) == 1:
-                        ret = self.functionList[self.taskList.index(cmd[0])]()
-                    elif len(cmd) == 2:
-                        ret = self.functionList[
-                            self.taskList.index(cmd[0])](cmd[1])
-                    elif len(cmd) == 3:
-                        ret = self.functionList[
-                            self.taskList.index(cmd[0])](cmd[1], cmd[2])
-                    else:
-                        print("too many args")
-                    if isinstance(ret, str) and self.slack:
-                        self.sendSlack(ret)
+                    try:
+                        ret = ""
+                        if len(cmd) == 1:
+                            ret = self.functionList[
+                                self.taskList.index(cmd[0])]()
+                        else:
+                            ret = self.functionList[
+                                self.taskList.index(cmd[0])](*cmd[1:])
+                        if isinstance(ret, str) and self.slack:
+                            self.sendSlack(ret)
+                    except TypeError:
+                        print("TypeError")
                 else:
                     print(cmd, ": not registerd.")
 
