@@ -164,6 +164,8 @@ class PyCmdSched(object):
                 self.previous[i] = datetime.now()
                 if self.slack:
                     self.sendSlack(ret)
+                if self.log:
+                    self.writeLog(ret)
 
     def procedure(self):
         self.showTask()
@@ -179,9 +181,11 @@ class PyCmdSched(object):
                     if len(cmd) == 1:
                         ret = self.functionList[self.taskList.index(cmd[0])]()
                     elif len(cmd) == 2:
-                        ret = self.functionList[self.taskList.index(cmd[0])](cmd[1])
+                        ret = self.functionList[
+                            self.taskList.index(cmd[0])](cmd[1])
                     elif len(cmd) == 3:
-                        ret = self.functionList[self.taskList.index(cmd[0])](cmd[1], cmd[2])
+                        ret = self.functionList[
+                            self.taskList.index(cmd[0])](cmd[1], cmd[2])
                     else:
                         print("too many args")
                     if isinstance(ret, str) and self.slack:
