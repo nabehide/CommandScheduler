@@ -1,4 +1,4 @@
-from PyCmdSched.PyCmdSched import PyCmdSched
+from PyCmdSched import PyCmdSched
 from private import slackURL
 
 config = {"slackURL": slackURL, "logName": "log/log"}

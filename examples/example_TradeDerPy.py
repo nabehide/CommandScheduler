@@ -1,5 +1,5 @@
-from PyCmdSched.PyCmdSched import PyCmdSched
-from TradeDerPy.TradeDerPy import TradeDerPy
+from PyCmdSched import PyCmdSched
+from TradeDerPy import TradeDerPy
 
 from private import username, password, slackURL
 from schedule import schedule
