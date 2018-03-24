@@ -1,6 +1,6 @@
 import sys
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 import requests
 import json
 if os.name == "nt":
@@ -143,7 +143,11 @@ class PyCmdSched(object):
         names = dir(classObject)
         for name in names:
             if name[0] != "_" and callable(classObject.__getattribute__(name)):
-                self.addTask(name, classObject.__getattribute__(name))
+                self.addTask(
+                    classObject.__class__.__name__ + "." + name,
+                    classObject.__getattribute__(name)
+                    # classObject.__class__.__name__
+                )
 
     def makeSchedule(self, schedule):
         for sch in schedule.keys():
@@ -159,7 +163,7 @@ class PyCmdSched(object):
         for i in range(self.numberSchedule):
             name = self.scheduleList[i]
             diff = datetime.now() - self.previous[i]
-            if self.cycle[i] * 60 <= diff.seconds:
+            if timedelta(minutes=self.cycle[i]) <= diff:
                 ret = self.functionList[self.taskList.index(name)]()
                 self.previous[i] = datetime.now()
                 if self.slack:
@@ -187,9 +191,9 @@ class PyCmdSched(object):
                                 self.taskList.index(cmd[0])](*cmd[1:])
                         if isinstance(ret, str) and self.slack:
                             self.sendSlack(ret)
-                    except TypeError:
-                        print("TypeError")
+                    except TypeError as e:
+                        print("TypeError", e)
                 else:
-                    print(cmd, ": not registerd.")
+                    print(cmd, ": not registered.")
 
             self.routine()
