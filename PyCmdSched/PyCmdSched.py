@@ -34,6 +34,11 @@ class PyCmdSched(object):
         self.loadConfig(config)
 
     def loadConfig(self, config):
+        if "channel" not in config.keys() or config["channel"] == "":
+            self.channel = "#general"
+        else:
+            self.channel = config["channel"]
+
         if "slackURL" not in config.keys() or config["slackURL"] == "":
             self.slack = False
         else:
