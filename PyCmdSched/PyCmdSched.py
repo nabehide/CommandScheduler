@@ -1,5 +1,6 @@
 import sys
 import os
+import traceback
 from datetime import datetime, timedelta
 import requests
 import json
@@ -192,7 +193,7 @@ class PyCmdSched(object):
                         if isinstance(ret, str) and self.slack:
                             self.sendSlack(ret)
                     except TypeError as e:
-                        print("TypeError", e)
+                        print(traceback.format_exc())
                 else:
                     print(cmd, ": not registered.")
 
